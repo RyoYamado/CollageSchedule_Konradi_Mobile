@@ -16,8 +16,7 @@ import com.example.collageschedule_konradi_mobile.utils.getWeekDateRange
 fun ScheduleScreen() {
 
     var schedule by remember {
-        mutableStateOf<List<ScheduleByDateDto>>(emptyList())
-    }
+        mutableStateOf<List<ScheduleByDateDto>>(emptyList()) }
     var loading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
 

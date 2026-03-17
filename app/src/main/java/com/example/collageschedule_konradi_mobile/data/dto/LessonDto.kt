@@ -1,4 +1,5 @@
 package com.example.collageschedule_konradi_mobile.data.dto
+
 data class LessonDto(
     val lessonNumber: Int,
     val time: String,
