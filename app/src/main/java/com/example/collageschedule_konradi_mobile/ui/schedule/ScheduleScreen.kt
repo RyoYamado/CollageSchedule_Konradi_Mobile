@@ -1,4 +1,5 @@
 package com.example.collageschedule_konradi_mobile.ui.schedule
+
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,12 +11,16 @@ import androidx.compose.runtime.setValue
 import com.example.collageschedule_konradi_mobile.data.dto.ScheduleByDateDto
 import com.example.collageschedule_konradi_mobile.data.network.RetrofitInstance
 import com.example.collageschedule_konradi_mobile.utils.getWeekDateRange
+
 @Composable
 fun ScheduleScreen() {
+
     var schedule by remember {
-        mutableStateOf<List<ScheduleByDateDto>>(emptyList()) }
+        mutableStateOf<List<ScheduleByDateDto>>(emptyList())
+    }
     var loading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
+
     LaunchedEffect(Unit) {
         val (start, end) = getWeekDateRange()
         try {
@@ -30,6 +35,7 @@ fun ScheduleScreen() {
             loading = false
         }
     }
+
     when {
         loading -> CircularProgressIndicator()
         error != null -> Text("Ошибка: $error")

@@ -6,7 +6,7 @@ class ScheduleRepository(private val api: ScheduleApi) {
         return api.getSchedule(
             groupName = group,
             start = "2026-03-16",
-            end = "2026-03-25"
+            end = "2026-03-30"
         )
     }
 }
