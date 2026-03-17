@@ -1,4 +1,4 @@
-package com.example.collegeschedule.ui.schedule
+package com.example.collageschedule_konradi_mobile.ui.schedule
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -7,9 +7,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.example.collegeschedule.data.dto.ScheduleByDateDto
-import com.example.collegeschedule.data.network.RetrofitInstance
-import com.example.collegeschedule.utils.getWeekDateRange
+import com.example.collageschedule_konradi_mobile.data.dto.ScheduleByDateDto
+import com.example.collageschedule_konradi_mobile.data.network.RetrofitInstance
+import com.example.collageschedule_konradi_mobile.utils.getWeekDateRange
 @Composable
 fun ScheduleScreen() {
     var schedule by remember {

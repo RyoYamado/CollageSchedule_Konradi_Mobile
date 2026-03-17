@@ -1,4 +1,4 @@
-package com.example.collegeschedule.utils
+package com.example.collageschedule_konradi_mobile.utils
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

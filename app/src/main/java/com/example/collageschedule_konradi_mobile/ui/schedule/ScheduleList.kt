@@ -1,4 +1,4 @@
-package com.example.collegeschedule.ui.schedule
+package com.example.collageschedule_konradi_mobile.ui.schedule
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.collegeschedule.data.dto.ScheduleByDateDto
+import com.example.collageschedule_konradi_mobile.data.dto.ScheduleByDateDto
 @Composable
 fun ScheduleList(data: List<ScheduleByDateDto>) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {

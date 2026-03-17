@@ -1,4 +1,4 @@
-package com.example.collegeschedule.data.dto
+package com.example.collageschedule_konradi_mobile.data.dto
 data class ScheduleByDateDto(
     val lessonDate: String, // ISO: 2026-01-12
     val weekday: String,

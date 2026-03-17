@@ -1,4 +1,4 @@
-package com.example.collegeschedule.data.dto
+package com.example.collageschedule_konradi_mobile.data.dto
 data class LessonPartDto(
     val subject: String,
     val teacher: String,

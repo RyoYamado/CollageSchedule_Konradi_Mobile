@@ -1,5 +1,5 @@
-package com.example.collegeschedule.data.network
-import com.example.collegeschedule.data.api.ScheduleApi
+package com.example.collageschedule_konradi_mobile.data.network
+import com.example.collageschedule_konradi_mobile.data.api.ScheduleApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitInstance {

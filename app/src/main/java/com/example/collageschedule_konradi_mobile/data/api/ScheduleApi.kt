@@ -1,5 +1,5 @@
-package com.example.collegeschedule.data.api
-import com.example.collegeschedule.data.dto.ScheduleByDateDto
+package com.example.collageschedule_konradi_mobile.data.api
+import com.example.collageschedule_konradi_mobile.data.dto.ScheduleByDateDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
