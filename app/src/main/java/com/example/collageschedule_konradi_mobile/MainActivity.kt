@@ -5,30 +5,21 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
-import com.example.collageschedule_konradi_mobile.data.api.ScheduleApi
-import com.example.collageschedule_konradi_mobile.data.repository.ScheduleRepository
+import androidx.compose.ui.platform.LocalContext
+import com.example.collageschedule_konradi_mobile.data.repository.FavoritesRepository
+import com.example.collageschedule_konradi_mobile.ui.favorites.FavoritesScreen
 import com.example.collageschedule_konradi_mobile.ui.schedule.ScheduleScreen
 import com.example.collageschedule_konradi_mobile.ui.theme.CollegeScheduleTheme
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,33 +33,21 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@PreviewScreenSizes
 @Composable
 fun CollegeScheduleApp() {
-    var currentDestination by rememberSaveable {
-        mutableStateOf(AppDestinations.HOME)
-    }
+    val context = LocalContext.current
+    val favoritesRepository = remember { FavoritesRepository(context) }
 
-    val retrofit = remember {
-        Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:5268/") // localhost для Android Emulator
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    val api = remember { retrofit.create(ScheduleApi::class.java) }
-    val repository = remember { ScheduleRepository(api) }
+    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
+    // Group selected from Favorites → switch to HOME tab
+    var groupToOpen by remember { mutableStateOf("ИС-12") }
 
     NavigationSuiteScaffold(
+        modifier = Modifier.fillMaxSize(),
         navigationSuiteItems = {
             AppDestinations.entries.forEach {
                 item(
-                    icon = {
-                        Icon(
-                            it.icon,
-                            contentDescription = it.label
-                        )
-                    },
+                    icon = { Icon(it.icon, contentDescription = it.label) },
                     label = { Text(it.label) },
                     selected = it == currentDestination,
                     onClick = { currentDestination = it }
@@ -76,14 +55,39 @@ fun CollegeScheduleApp() {
             }
         }
     ) {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            when (currentDestination) {
-                AppDestinations.HOME -> ScheduleScreen()
-                AppDestinations.FAVORITES ->
-                    Text("Избранные группы", modifier = Modifier.padding(innerPadding))
-                AppDestinations.PROFILE ->
-                    Text("Профиль студента", modifier = Modifier.padding(innerPadding))
-            }
+        when (currentDestination) {
+            AppDestinations.HOME ->
+                ScheduleScreen(
+                    initialGroup = groupToOpen,
+                    favoritesRepository = favoritesRepository
+                )
+
+            AppDestinations.FAVORITES ->
+                FavoritesScreen(
+                    favoritesRepository = favoritesRepository,
+                    onGroupSelected = { group ->
+                        groupToOpen = group
+                        currentDestination = AppDestinations.HOME
+                    }
+                )
+
+            AppDestinations.PROFILE ->
+                ProfilePlaceholder()
+        }
+    }
+}
+
+@Composable
+fun ProfilePlaceholder() {
+    Surface(modifier = Modifier.fillMaxSize()) {
+        androidx.compose.foundation.layout.Box(
+            contentAlignment = androidx.compose.ui.Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Text(
+                "Профиль студента",
+                style = MaterialTheme.typography.titleLarge
+            )
         }
     }
 }
@@ -92,7 +96,7 @@ enum class AppDestinations(
     val label: String,
     val icon: ImageVector,
 ) {
-    HOME("Home", Icons.Default.Home),
-    FAVORITES("Favorites", Icons.Default.Favorite),
-    PROFILE("Profile", Icons.Default.AccountBox),
+    HOME("Расписание", Icons.Default.Home),
+    FAVORITES("Избранное", Icons.Default.Favorite),
+    PROFILE("Профиль", Icons.Default.AccountBox),
 }
